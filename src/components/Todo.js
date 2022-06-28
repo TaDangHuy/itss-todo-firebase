@@ -6,13 +6,13 @@ import Input from './Input';
 import Filter from './Filter';
 
 /* カスタムフック */
-import useStorage from '../hooks/storage';
+import useFirestore from '../hooks/firestore';
 
 /* ライブラリ */
 import {getKey} from "../lib/util";
 
 function Todo() {
-  const [items, putItems, clearItems] = useStorage();
+  const [items, addItem, updateItem, clearItems] =　useFirestore();
   
   const [filter, setFilter] = React.useState('ALL');
 
@@ -23,17 +23,7 @@ function Todo() {
   });
   
   const handleCheck = checked => {
-    const newItems = items.map(item => {
-      if (item.key === checked.key) {
-        item.done = !item.done;
-      }
-      return item;
-    });
-    putItems(newItems);
-  };
-  
-  const handleAdd = text => {
-    putItems([...items, { key: getKey(), text, done: false }]);
+    updateItem(checked);
   };
   
   const handleFilterChange = value => setFilter(value);
@@ -48,7 +38,7 @@ function Todo() {
           <span> ITSS Todoアプリ</span>
         </span>
       </div>
-      <Input onAdd={handleAdd} />
+      <Input onAdd={addItem} />
       <Filter
         onChange={handleFilterChange}
         value={filter}
