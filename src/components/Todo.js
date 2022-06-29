@@ -9,7 +9,7 @@ import Filter from './Filter';
 import useFirestore from '../hooks/firestore';
 
 /* ライブラリ */
-import {getKey} from "../lib/util";
+// import {getKey} from "../lib/util";
 
 function Todo() {
   const [items, addItem, updateItem, clearItems] =　useFirestore();
